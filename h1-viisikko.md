@@ -1,6 +1,7 @@
 # Lue ja tiivistä
 ## Karvinen 2023: Run Salt Command Locally
-
+- Saltilla ohjataan useampaa konetta, mutta tässä ohjeessa keskitytään lokaaliin harjoitteluun.
+- Kerrataan kuinka pkg (paketit), file (tiedostot), service (palvelut/daemonit), user (käyttäjätunnukset) ja cmd (komentorivikomentoja) ovat tärkeimpiä tilafunktioita.
 ## Karvinen 2018: Salt Quickstart – Salt Stack Master and Slave on Ubuntu Linux
 
 ## Karvinen 2006: Raportin kirjoittaminen
