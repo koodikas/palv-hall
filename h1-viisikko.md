@@ -5,8 +5,23 @@
 - Lokaalit komennot ovat muodossa sudo salt-call --local
 
 ## Karvinen 2018: Salt Quickstart – Salt Stack Master and Slave on Ubuntu Linux
+- Salt Master kuuluu asentaa tietokoneelle jolla hallitaan orjia.
+  - sudo apt-get update
+  - sudo apt-get -y install salt-master
+- Salt Slave asennetaan kaikille orjille joita halutaan hallita massoissa.
+  - slave$ sudo apt-get update
+  - slave$ sudo apt-get -y install salt-minion
+- Orjien täytyy tietää missä osoitteessa master on ja orjien täytyy saada yksilöivä id.
+  - _Mitäköhän tapahtuu jos kaksi orjaa käyttää samaa id:tä?_
+- Orjat pitää hyväksyä masterilla
+  - master$ sudo salt-key -A
+  - _Tätäkin varmaan voisi automatisoida?_
 
 ## Karvinen 2006: Raportin kirjoittaminen
+- Raporttia kuuluu kirjoittaa tehtävää tehdessä tuoreeltaan.
+- Raportti kuuluu tehdä siistiksi ja helppolukuiseksi.
+- Kerrotaan täsmällisesti mitä on tehty ja millä koneella.
+- Ei missään nimessä saa plagioida ja lähteet kuuluu merkata.
 
 ## WMWare Inc: Salt Install Guide: Linux (DEB) (poimi vain olennainen osa)
 
