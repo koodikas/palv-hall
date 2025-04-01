@@ -19,7 +19,7 @@ Ei ollut ongelmia, tein sen jo ennen ensimmäistä tuntia.
 
 
 # Lähteet
-Karvinen 2023: https://terokarvinen.com/2021/salt-run-command-locally/
+Karvinen 2023: https://terokarvinen.com/2021/salt-run-command-locally/ \
 Karvinen 2018: https://terokarvinen.com/2018/03/28/salt-quickstart-salt-stack-master-and-slave-on-ubuntu-linux/
 Karvinen 2006: https://terokarvinen.com/2006/06/04/raportin-kirjoittaminen-4/
 WMWare Inc: https://docs.saltproject.io/salt/install-guide/en/latest/topics/install-by-operating-system/linux-deb.html
