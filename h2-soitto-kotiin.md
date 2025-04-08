@@ -80,6 +80,7 @@
 3.  Manuaalinen asennus epäonnistui virheeseen `E: Unable to locate package salt-master`. Tämä johtui puuttuvasta Salt-pakettilähteestä ja aluksi ilmenneistä virtuaalikoneen DNS-ongelmista.
 4.  Koska manuaalinen asennus ei onnistunut millään monien eri yritysten takia, käytin `Vagrantfile`-tiedostoa (provisiontia, joka tarkoittaa koneiden asetusten ja ohjelmistojen asentamista automaattisesti skriptien avulla) Saltin asentamiseksi. Skriptin minulle tuotti Gemini 2.5 Pro.
     - https://github.com/koodikas/palv-hall/blob/49e469ff3f3a032f75e452f11586feaf5d8c506a/Vagrant
+    - Skriptin pitäisi myös toimia muilla koneilla, siinä on DNS palvelimen vaihto tehty itse, mutta niihin pitäisi saada myös myöhemminkin yhteys niin se ei ole haitaksikaan. (Vaikka olikin vain oman ongelman korjaamista varten)
 5.  Ajoin `vagrant destroy -f` ja `vagrant up` käyttäen tätä automaattiseen asennukseen muokattua `Vagrantfile`:a. Tämä asennus onnistui.
 6.  Varmistin asennuksen toimivuuden kirjautumalla uudelleen master-koneeseen (`t001`): `vagrant ssh t001`.
 7.  Tarkistin hyväksytyt avaimet komennolla `sudo salt-key -L`. Tulos osoitti, että `t002` oli hyväksytty.
@@ -87,6 +88,10 @@
 9.  Ajoin komennon minionilla masterilta käsin: `sudo salt 't002' cmd.run 'hostname -I'`. Komento suoritettiin onnistuneesti ja tulosti `t002`:n IP-osoitteet.
 10. Kuvakaappaus onnistuneista varmistuskomennoista (`salt-key -L`, `test.ping`, `cmd.run`):
     - ![Kuva onnistuneista Salt-komennoista masterilla](https://github.com/user-attachments/assets/ed25b6f4-f8ca-46bd-be45-b159d0987b73)
+
+## e) Kokeile vähintään kahta tilaa verkon yli (viisikosta: pkg, file, service, user, cmd)
+Kokeilen kahta edellistä käyttämääni tilaa:
+- 
 
 # Lähteet
 
