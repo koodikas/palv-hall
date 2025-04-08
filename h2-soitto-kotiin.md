@@ -78,7 +78,8 @@
 1.  Kirjauduin master-koneeksi tarkoitetulle koneelle `t001` komennolla `vagrant ssh t001`.
 2.  Yritin asentaa `salt-master`-pakettia manuaalisesti komennoilla `sudo apt-get update` ja `sudo apt-get -qy install salt-master`.
 3.  Manuaalinen asennus epäonnistui virheeseen `E: Unable to locate package salt-master`. Tämä johtui puuttuvasta Salt-pakettilähteestä ja aluksi ilmenneistä virtuaalikoneen DNS-ongelmista.
-4.  Koska manuaalinen asennus ei onnistunut millään monien eri yritysten takia, käytin `Vagrantfile`-tiedostoa (provisiontia, joka tarkoittaa koneiden asetusten ja ohjelmistojen asentamista automaattisesti skriptien avulla) Saltin asentamiseksi. Skriptin minulle tuotti Gemini 2.5 Pro
+4.  Koska manuaalinen asennus ei onnistunut millään monien eri yritysten takia, käytin `Vagrantfile`-tiedostoa (provisiontia, joka tarkoittaa koneiden asetusten ja ohjelmistojen asentamista automaattisesti skriptien avulla) Saltin asentamiseksi. Skriptin minulle tuotti Gemini 2.5 Pro.
+    - https://github.com/koodikas/palv-hall/blob/49e469ff3f3a032f75e452f11586feaf5d8c506a/Vagrant
 5.  Ajoin `vagrant destroy -f` ja `vagrant up` käyttäen tätä automaattiseen asennukseen muokattua `Vagrantfile`:a. Tämä asennus onnistui.
 6.  Varmistin asennuksen toimivuuden kirjautumalla uudelleen master-koneeseen (`t001`): `vagrant ssh t001`.
 7.  Tarkistin hyväksytyt avaimet komennolla `sudo salt-key -L`. Tulos osoitti, että `t002` oli hyväksytty.
