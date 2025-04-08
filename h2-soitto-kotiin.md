@@ -1,6 +1,6 @@
 # Lue ja tiivistä
 ## Karvinen 2021: Two Machine Virtual Network With Debian 11 Bullseye and Vagrant
-- Vagrantilla voi luoda nopeasti kahden koneen virtuaaliverkon Debian 11 -käyttöjärjestelmällä.
+- Vagrantilla voi luoda nopeasti kahden koneen virtuaaliverkon Debian käyttöjärjestelmällä.
 - Se automatisoi VirtualBox-koneiden pystyttämisen ja SSH-kirjautumisen ilman graafista käyttöliittymää.
 - Asennus on helppoa Debianilla ja Ubuntulla (`apt-get`) tai lataamalla asennusohjelmat Macille ja Windowsille.
 - `Vagrantfile`-tiedosto määrittää verkon asetukset (kaksi konetta, IP-osoitteet, jaetut kansiot).
