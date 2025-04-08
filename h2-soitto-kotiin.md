@@ -74,15 +74,18 @@
 8.  Pingasin ensimmäistä konetta komennolla `ping -c 1 192.168.88.101`.
 
 ## d) Herra-orja verkossa. Demonstroi Salt herra-orja arkkitehtuurin toimintaa kahden Linux-koneen verkossa, jonka teit Vagrantilla. Asenna toiselle koneelle salt-master, toiselle salt-minion. Laita orjan /etc/salt/minion -tiedostoon masterin osoite. Hyväksy avain ja osoita, että herra voi komentaa orjakonetta.
-1. Kirjauduin ensin ensimmäiselle koneelle: vagrant ssh t001
-2. sudo apt-get update ja sudo apt-get -qy install salt-master
-     - E: Unable to locate package salt-master
-         - ongelma oli loputon kuilu mitä en saanut ratkaistua. ainut tapa miten ratkaisin onghelman oli Gemini 2.5 Pro:n generoima Vagrant tiedosto joka asentaa asiat valmiiksi.
-3. Valitettavien ongelmien takia voin vain todeta että masterin ja minionin asennus on tapahtunut oikein:
-    - ![image](https://github.com/user-attachments/assets/ed25b6f4-f8ca-46bd-be45-b159d0987b73)
-    - sudo salt-key -L näyttää että orja on hyväksyttyjen orjien listalla.
-    - sudo salt '*' test.ping testaa yhteyttä kaikkiin orjiin. Tässä tapauksessa t002.
-    - sudo salt 't002' cmd.run 'hostname -I' tulostaa orjalla IP osoitteet.
+
+1.  Kirjauduin master-koneeksi tarkoitetulle koneelle `t001` komennolla `vagrant ssh t001`.
+2.  Yritin asentaa `salt-master`-pakettia manuaalisesti komennoilla `sudo apt-get update` ja `sudo apt-get -qy install salt-master`.
+3.  Manuaalinen asennus epäonnistui virheeseen `E: Unable to locate package salt-master`. Tämä johtui puuttuvasta Salt-pakettilähteestä ja aluksi ilmenneistä virtuaalikoneen DNS-ongelmista.
+4.  Koska manuaalinen asennus ei onnistunut millään monien eri yritysten takia, käytin `Vagrantfile`-tiedostoa (provisiontia, joka tarkoittaa koneiden asetusten ja ohjelmistojen asentamista automaattisesti skriptien avulla) Saltin asentamiseksi. Skriptin minulle tuotti Gemini 2.5 Pro
+5.  Ajoin `vagrant destroy -f` ja `vagrant up` käyttäen tätä automaattiseen asennukseen muokattua `Vagrantfile`:a. Tämä asennus onnistui.
+6.  Varmistin asennuksen toimivuuden kirjautumalla uudelleen master-koneeseen (`t001`): `vagrant ssh t001`.
+7.  Tarkistin hyväksytyt avaimet komennolla `sudo salt-key -L`. Tulos osoitti, että `t002` oli hyväksytty.
+8.  Testasin yhteyden minioniin komennolla `sudo salt '*' test.ping`. Tulos oli `t002: True`.
+9.  Ajoin komennon minionilla masterilta käsin: `sudo salt 't002' cmd.run 'hostname -I'`. Komento suoritettiin onnistuneesti ja tulosti `t002`:n IP-osoitteet.
+10. Kuvakaappaus onnistuneista varmistuskomennoista (`salt-key -L`, `test.ping`, `cmd.run`):
+    - ![Kuva onnistuneista Salt-komennoista masterilla](https://github.com/user-attachments/assets/ed25b6f4-f8ca-46bd-be45-b159d0987b73)
 
 # Lähteet
 
