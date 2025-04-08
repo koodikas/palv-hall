@@ -91,12 +91,15 @@
 
 ## e) Kokeile vähintään kahta tilaa verkon yli (viisikosta: pkg, file, service, user, cmd)
 Kokeilen kahta edellistä käyttämääni tilaa:
-1. Kirjaudun esin masterille (olin syönyt välissä)
+1. Kirjaudun esin masterille (olin syönyt välissä n. 30min edellisestä tehtävästä)
 2. kokeilin komentoa sudo salt 't002' state.single pkg.installed name=tree
    - komento epäonnistui, kokeilin käskyllä katsoa onko salt pystyssä sudo systemctl status salt-master
    - ![image](https://github.com/user-attachments/assets/de79c45d-88c3-4bb5-a7f3-363c056021d6)
    - Linux oli tappanut saltin ramin puutteesta mahdollisesti. Lisään ramia asennukseen ja teen uudelleen.
-
+3. Onnistuin ramin lisäyksen jälkeen: sudo salt 't002' state.single pkg.installed name=tree
+     - ![image](https://github.com/user-attachments/assets/5e2e723a-e706-4f72-92d3-3db70bf9c515)
+4. Sitten tein testikäyttäjän sudo salt 't002' state.single user.present name=testuser
+    - ![image](https://github.com/user-attachments/assets/e080e210-52fc-4fb8-abff-de06f0273f2c)
 
 # Lähteet
 
