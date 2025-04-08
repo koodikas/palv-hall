@@ -50,12 +50,22 @@ Vagrant.configure("2") do |config|
   config.vm.define "t001" do |t001|
     t001.vm.hostname = "t001"
     t001.vm.network "private_network", ip: "192.168.88.101"
+
+    t001.vm.provider "virtualbox" do |vb|
+      # Aseta muistin määrä megatavuina (esim. 2048 = 2GB)
+      vb.memory = "2048"
+      # Voit myös asettaa prosessorien määrää tarvittaessa:
+      # vb.cpus = 2
+    end
+    # ---------------------------
+
     t001.vm.provision "shell", inline: $master_script
   end
 
   config.vm.define "t002", primary: true do |t002|
     t002.vm.hostname = "t002"
     t002.vm.network "private_network", ip: "192.168.88.102"
+    # Minionille riittää yleensä vähempi muisti, ei lisätä ellei tule ongelmia
     t002.vm.provision "shell", inline: $minion_script
   end
 end
