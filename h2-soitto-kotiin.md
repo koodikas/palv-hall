@@ -77,3 +77,5 @@ Tässä esimerkissä määritellään yksinkertainen SaltStack-konfiguraatio.
     ```bash
     $ sudo salt '*' state.apply
     ```
+# Lähteet
+Tero Karvinen: h2-soitto-kotiin https://terokarvinen.com/palvelinten-hallinta/#h2-soitto-kotiin
