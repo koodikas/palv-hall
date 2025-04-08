@@ -1,0 +1,61 @@
+$master_script = <<MASTER_SCRIPT
+echo "--- Provisioning Salt Master on t001 ---"
+set -e
+set -o verbose
+echo "Applying temporary DNS fix..."
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf > /dev/null
+echo "Updating package lists after DNS fix..."
+sudo apt-get update
+echo "Ensuring curl is installed..."
+sudo apt-get install -y curl
+echo "Installing Salt Master via bootstrap..."
+curl -v --fail -L https://raw.githubusercontent.com/saltstack/salt-bootstrap/stable/bootstrap-salt.sh -o /tmp/install_salt.sh
+sudo sh /tmp/install_salt.sh -M
+echo "Configuring auto-accept for minion keys..."
+sudo mkdir -p /etc/salt/master.d
+echo "auto_accept: True" | sudo tee /etc/salt/master.d/auto-accept.conf > /dev/null
+echo "Restarting salt-master service..."
+sudo systemctl restart salt-master
+echo "--- Salt Master provisioning complete on t001 ---"
+MASTER_SCRIPT
+
+$minion_script = <<MINION_SCRIPT
+echo "--- Provisioning Salt Minion on t002 ---"
+set -e
+set -o verbose
+echo "Applying temporary DNS fix..."
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf > /dev/null
+echo "Updating package lists after DNS fix..."
+sudo apt-get update
+echo "Ensuring curl is installed..."
+sudo apt-get install -y curl
+echo "Installing Salt Minion via bootstrap..."
+curl -v --fail -L https://raw.githubusercontent.com/saltstack/salt-bootstrap/stable/bootstrap-salt.sh -o /tmp/install_salt.sh
+sudo sh /tmp/install_salt.sh
+echo "Configuring master address for minion..."
+sudo mkdir -p /etc/salt/minion.d
+echo "master: 192.168.88.101" | sudo tee /etc/salt/minion.d/master.conf > /dev/null
+echo "Restarting salt-minion service..."
+sudo systemctl restart salt-minion
+echo "--- Salt Minion provisioning complete on t002 ---"
+MINION_SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bullseye64"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "shared/", "/home/vagrant/shared", create: true
+
+  config.vm.define "t001" do |t001|
+    t001.vm.hostname = "t001"
+    t001.vm.network "private_network", ip: "192.168.88.101"
+    t001.vm.provision "shell", inline: $master_script
+  end
+
+  config.vm.define "t002", primary: true do |t002|
+    t002.vm.hostname = "t002"
+    t002.vm.network "private_network", ip: "192.168.88.102"
+    t002.vm.provision "shell", inline: $minion_script
+  end
+end
