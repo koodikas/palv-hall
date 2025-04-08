@@ -1,12 +1,11 @@
 # Lue ja tiivistä
 ## Karvinen 2021: Two Machine Virtual Network With Debian 11 Bullseye and Vagrant
 - Vagrantilla voi luoda nopeasti kahden koneen virtuaaliverkon Debian käyttöjärjestelmällä.
-- Se automatisoi VirtualBox-koneiden pystyttämisen ja SSH-kirjautumisen ilman graafista käyttöliittymää.
-- Asennus on helppoa Debianilla ja Ubuntulla (`apt-get`) tai lataamalla asennusohjelmat Macille ja Windowsille.
+- Se automatisoi VirtualBox-koneiden pystyttämisen ja SSH-kirjautumisen ilman työpöytää.
+- Asennus on helppoa, (`apt-get`) tai lataamalla asennusohjelman Windowsille.
 - `Vagrantfile`-tiedosto määrittää verkon asetukset (kaksi konetta, IP-osoitteet, jaetut kansiot).
 - Koneisiin voi kirjautua SSH:lla (`vagrant ssh <koneen_nimi>`), ja ne voivat kommunikoida keskenään sekä Internetin kanssa.
 - Koneet on helppo tuhota (`vagrant destroy`) ja luoda uudelleen (`vagrant up`) harjoittelua varten.
-- Ohje sisältää myös vianetsintävinkkejä yleisiin ongelmiin, kuten IP-osoitteiden sallittuihin alueisiin liittyen.
 ## Karvinen 2018: Salt Quickstart – Salt Stack Master and Slave on Ubuntu Linux
 
 * Salt Master kuuluu asentaa tietokoneelle, jolla hallitaan orjia.
@@ -29,53 +28,21 @@
     ```
     * _Tätäkin varmaan voisi automatisoida?_
 ## Salt Vagrant - automatically provision one master and two slaves
-Tässä esimerkissä määritellään yksinkertainen SaltStack-konfiguraatio.
+- Luo hakemisto (`/srv/salt/hello`) Salt-tilatiedostoille.
+- Määritä haluttu tila (esim. hallittu tiedosto `/tmp/infra-as-code`) `.sls`-tiedostoon (`init.sls`) YAML-syntaksilla.
+- Aja tämä tila (`hello`) minioneihin (hallittaviin palvelimiin) komennolla `sudo salt '*' state.apply hello`.
+- Luo `top.sls`-tiedosto määrittämään, mitkä tilat ajetaan millekin minionille.
+- Määritä `top.sls`:ssä esimerkiksi, että kaikki minionit (`'*'`) ajavat `hello`-tilan.
+- Aja `top.sls`:n mukaiset tilat komennolla `sudo salt '*' state.apply` ilman erillistä tilan nimeämistä.
+# Tehtävät
+## a) Hello Vagrant! Osoita jollain komennolla, että Vagrant on asennettu (esim tulostaa vagrantin versionumeron). En ole vielä asentanut Vagranttia, joten raportoin myös asentamisen.
+Hain vagrant windows 11 ja haun sivussa wikipedia toteaa että se on HashiCorpin tekemä, joten menen esimmäiseen linkkiin: https://developer.hashicorp.com/vagrant/docs/installation ja latasin vagrant_2.4.3_windows_amd64.msi version. ![image](https://github.com/user-attachments/assets/7267acab-d7b5-4d8c-9cfe-dc4c8188a64d)
 
-### 1. State-tiedoston (`init.sls`) luonti
 
-* Luo hakemisto:
-    ```bash
-    $ sudo mkdir -p /srv/salt/hello
-    ```
-* Luo ja muokkaa `init.sls` YAML-muodossa (huomioi sisennykset, 2 välilyöntiä, ei tabeja):
-    ```bash
-    $ sudoedit /srv/salt/hello/init.sls
-    ```
-* Lisää sisältö tiedostoon:
-    ```yaml
-    # /srv/salt/hello/init.sls
-    /tmp/seba:
-      file.managed
-    ```
-    Tämä varmistaa, että tiedosto `/tmp/seba` on olemassa ja Saltin hallinnoima.
 
-### 2. Staten (`hello`) ajaminen
-
-* Aja `hello`-state kaikkiin minioneihin (`*`):
-    ```bash
-    $ sudo salt '*' state.apply hello
-    ```
-
-### 3. Top-tiedoston (`top.sls`) määrittely
-
-* `top.sls` määrittää, mitkä statet ajetaan missäkin minionissa.
-* Luo ja muokkaa `top.sls`:
-    ```bash
-    $ sudoedit /srv/salt/top.sls
-    ```
-* Lisää sisältö, joka kohdistaa `hello`-staten kaikkiin minioneihin `base`-ympäristössä:
-    ```yaml
-    # /srv/salt/top.sls
-    base:
-      '*':
-        - hello
-    ```
-
-### 4. Statejen ajaminen `top.sls`:n avulla
-
-* Nyt voit ajaa kaikki `top.sls`:ssä määritellyt statet ilman erillistä state-nimen mainintaa:
-    ```bash
-    $ sudo salt '*' state.apply
-    ```
 # Lähteet
-Tero Karvinen: h2-soitto-kotiin https://terokarvinen.com/palvelinten-hallinta/#h2-soitto-kotiin
+Karvinen 2021: Two Machine Virtual Network With Debian 11 Bullseye and Vagrant
+Karvinen 2018: Salt Quickstart – Salt Stack Master and Slave on Ubuntu Linux 
+Karvinen 2023: Salt Vagrant - automatically provision one master and two slaves
+Karvinen: h2-soitto-kotiin https://terokarvinen.com/palvelinten-hallinta/#h2-soitto-kotiin
+HashiCorp - Vagrant installation https://developer.hashicorp.com/vagrant/docs/installation
