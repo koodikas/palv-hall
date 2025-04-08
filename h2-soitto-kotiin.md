@@ -76,7 +76,13 @@
 ## d) Herra-orja verkossa. Demonstroi Salt herra-orja arkkitehtuurin toimintaa kahden Linux-koneen verkossa, jonka teit Vagrantilla. Asenna toiselle koneelle salt-master, toiselle salt-minion. Laita orjan /etc/salt/minion -tiedostoon masterin osoite. Hyväksy avain ja osoita, että herra voi komentaa orjakonetta.
 1. Kirjauduin ensin ensimmäiselle koneelle: vagrant ssh t001
 2. sudo apt-get update ja sudo apt-get -qy install salt-master
-     
+     - E: Unable to locate package salt-master
+         - ongelma oli loputon kuilu mitä en saanut ratkaistua. ainut tapa miten ratkaisin onghelman oli Gemini 2.5 Pro:n generoima Vagrant tiedosto joka asentaa asiat valmiiksi.
+3. Valitettavien ongelmien takia voin vain todeta että masterin ja minionin asennus on tapahtunut oikein:
+    - ![image](https://github.com/user-attachments/assets/ed25b6f4-f8ca-46bd-be45-b159d0987b73)
+    - sudo salt-key -L näyttää että orja on hyväksyttyjen orjien listalla.
+    - sudo salt '*' test.ping testaa yhteyttä kaikkiin orjiin. Tässä tapauksessa t002.
+    - sudo salt 't002' cmd.run 'hostname -I' tulostaa orjalla IP osoitteet.
 
 # Lähteet
 
