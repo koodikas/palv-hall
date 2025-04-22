@@ -5,7 +5,12 @@
   2. hallinnoimalla asetustiedostoa
   3. varmistamalla palvelun tila (käynnissä/uudelleenkäynnistys).
 - SSH-portin vaihto:
-  1. 
+  1. Luodaan SSH state tiedosto joka kopioi muokatun config tiedoston ohjelman luoman tiedoston päälle.
+  2. Kopioidaan alkuperäinen config tiedosto ja muokataan se haluamalla tavalla
+     - muista tallentaa se määritettyyn lokaatioon mistä se kopioidaan
+  3. käynnistä sls tiedosto saltilla
+  4. ???
+  5. profit
 
 
 
