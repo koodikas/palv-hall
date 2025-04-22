@@ -18,7 +18,7 @@
 - Testi toimiiko:`sudo systemctl status apache2`ja tarkastelun jälkeen `q`
 - Korvataan nettisivun html tiedoston sisältö echon tekstillä:`echo Testing out my cool website | sudo tee /var/www/html/index.html`
 ## b) SSHouto. Lisää uusi portti, jossa SSHd kuuntelee.
-`vagrant up`, tiedosto löytyy Vagr
+`vagrant up`,  Vagrant tiedosto löytyy [tästä](https://github.com/koodikas/palv-hall/blob/main/Vagrant)
 
 
 
