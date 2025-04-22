@@ -11,9 +11,11 @@
   3. käynnistä sls tiedosto saltilla
   4. ???
   5. profit
-
-
-
+  - Näin saadaan useamalle koneelle vaihdettua ssh portti helposti.
+# Tehtävät
+## a) Apache easy mode. Asenna Apache, korvaa sen testisivu ja varmista, että demoni käynnistyy.
+- 'sudo apt update && sudo apt install apache2 -y'
+## b) SSHouto. Lisää uusi portti, jossa SSHd kuuntelee.
 
 
 
