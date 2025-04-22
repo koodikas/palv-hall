@@ -14,7 +14,9 @@
   - Näin saadaan useamalle koneelle vaihdettua ssh portti helposti.
 # Tehtävät
 ## a) Apache easy mode. Asenna Apache, korvaa sen testisivu ja varmista, että demoni käynnistyy.
-- 'sudo apt update && sudo apt install apache2 -y'
+- Apachen asennus:`sudo apt update && sudo apt install apache2 -y`
+- Testi toimiiko:`sudo systemctl status apache2`ja tarkastelun jälkeen `q`
+- Korvataan nettisivun html tiedoston sisältö echon tekstillä:`echo Testing out my cool website | sudo tee /var/www/html/index.html`
 ## b) SSHouto. Lisää uusi portti, jossa SSHd kuuntelee.
 
 
@@ -22,7 +24,7 @@
 
 # Lähteet
 - Karvinen 2018: Pkg-File-Service: https://terokarvinen.com/2018/04/03/pkg-file-service-control-daemons-with-salt-change-ssh-server-port/
-- Tehtävienanto ja vihjeet: [https://terokarvinen.com/palvelinten-hallinta/#h3-infraa-koodina](https://terokarvinen.com/palvelinten-hallinta/#h4-pkg-file-service)
+- Tehtävienanto ja vihjeet: https://terokarvinen.com/palvelinten-hallinta/#h4-pkg-file-service
 - Gemini 2.5 Pro (experimental)
   - kääntämisessä englannista suomeksi
   - avaamaan komentojen merkintöjä `-p` `-y` jne.
