@@ -32,8 +32,8 @@ Ensin paikallisesti:
 - `ssh -p 1234 vagrant@localhost` ![image](https://github.com/user-attachments/assets/54460100-0074-4057-8a53-603e0ef37c7e)
 Sitten Masterilta käsin.
 - Kirjauduttuani masterille laitoin
-  - Hups! salasanatodennus taitaa estää yhdistämisen ![image](https://github.com/user-attachments/assets/0243ca4e-3e5c-406b-ad2d-37ee808c0345)
-  - Gemini2.5 Pro neuvoi kokeilemaan salasanan autentikointia.
+  - Hups! ![image](https://github.com/user-attachments/assets/0243ca4e-3e5c-406b-ad2d-37ee808c0345)
+  - Gemini2.5 Pro neuvoi, että salasanatodennus taitaa estää yhdistämisen. Sitten menin kokeilemaan salasanan autentikointia.
       - Eli minionilla sudo nano /etc/ssh/sshd_config ja salasanan varmistus päälle:
         ![image](https://github.com/user-attachments/assets/28622d30-644b-4c71-ab61-b763bad80445)
         - Ei auttanut: ![image](https://github.com/user-attachments/assets/11befc12-e527-41dd-9d81-b4880cb8a0c6)
