@@ -52,12 +52,10 @@ Vagrant.configure("2") do |config|
     t001.vm.network "private_network", ip: "192.168.88.101"
 
     t001.vm.provider "virtualbox" do |vb|
-      # Aseta muistin määrä megatavuina (esim. 2048 = 2GB)
       vb.memory = "2048"
       # Voit myös asettaa prosessorien määrää tarvittaessa:
       # vb.cpus = 2
     end
-    # ---------------------------
 
     t001.vm.provision "shell", inline: $master_script
   end
