@@ -255,7 +255,6 @@ Tässä miniprojektissa käytin vanhaa Vagrantilla tehtyä kahden virtuaalikonee
         ```
 
 ### Siivous
-
 1.  **Sammuta virtuaalikoneet:** Kun et enää tarvitse ympäristöä:
     ```bash
     vagrant halt
