@@ -1,0 +1,77 @@
+# Salt Masterin asennusskripti
+$master_script = <<MASTER_SCRIPT
+set -e
+# Asetetaan väliaikainen DNS-korjaus
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf > /dev/null
+sudo apt-get update -y
+# Varmistetaan curl asennus
+sudo apt-get install -y curl
+# Asennetaan Salt Master bootstrap-skriptillä GitHubista
+curl -LfsS https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh | sudo sh -s -- -M -A 192.168.88.101
+
+# Määritetään auto-accept ja file_roots
+sudo mkdir -p /etc/salt/master.d
+echo "auto_accept: True" | sudo tee /etc/salt/master.d/auto-accept.conf > /dev/null
+echo "file_roots:" | sudo tee /etc/salt/master.d/roots.conf > /dev/null
+echo "  base:" | sudo tee -a /etc/salt/master.d/roots.conf > /dev/null
+echo "    - /vagrant/srv/salt" | sudo tee -a /etc/salt/master.d/roots.conf > /dev/null
+# Käynnistetään salt-master palvelu uudelleen
+sudo systemctl enable salt-master
+sudo systemctl restart salt-master
+MASTER_SCRIPT
+
+# Minion asennusskripti
+$minion_script = <<MINION_SCRIPT
+set -e
+# Asetetaan väliaikainen DNS-korjaus
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf > /dev/null
+sudo apt-get update -y
+# Varmistetaan curl asennus
+sudo apt-get install -y curl
+# Asennetaan Salt Minion bootstrap-skriptillä GitHubista
+curl -LfsS https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh | sudo sh -s -- -A 192.168.88.101
+
+# Määritetään master-osoite eksplisiittisesti
+sudo mkdir -p /etc/salt/minion.d
+echo "master: 192.168.88.101" | sudo tee /etc/salt/minion.d/master.conf > /dev/null
+# Käynnistetään salt-minion palvelu uudelleen
+sudo systemctl enable salt-minion
+sudo systemctl restart salt-minion
+MINION_SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bullseye64" # [cite: 10]
+
+  config.vm.synced_folder "shared/", "/home/vagrant/shared", create: true
+
+  # Määritellään t001 (Salt Master)
+  config.vm.define "t001" do |t001|
+    t001.vm.hostname = "t001" # [cite: 11]
+    t001.vm.network "private_network", ip: "192.168.88.101" # [cite: 11]
+
+    t001.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048" # [cite: 12]
+      vb.name = "salt-master-t001" # [cite: 12]
+    end
+
+    # Suoritetaan masterin asennusskripti
+    t001.vm.provision "shell", inline: $master_script
+  end
+
+  # Määritellään t002 (Salt Minion)
+  config.vm.define "t002" do |t002|
+    t002.vm.hostname = "t002" # [cite: 13]
+    t002.vm.network "private_network", ip: "192.168.88.102" # [cite: 13]
+    t002.vm.network "forwarded_port", guest: 80, host: 8080 # [cite: 13]
+
+    t002.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024" # [cite: 14]
+      vb.name = "salt-minion-t002" # [cite: 14]
+    end
+
+    # Suoritetaan minionin asennusskripti
+    t002.vm.provision "shell", inline: $minion_script
+  end
+end
